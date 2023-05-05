@@ -6,6 +6,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PlayerController : MonoBehaviour
 {
+    public enum State { Move, Attack, Hit }
+    public State state = State.Move;
+    public int hp = 100;
+
     NavMeshAgent agent;
     Animator anim;
     public LayerMask movementMask;
@@ -16,6 +20,27 @@ public class PlayerController : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag =="Enemy")
+        {
+            state = State.Attack;
+            anim.SetTrigger("Attack");
+        }
+
+        if (state != State.Hit)
+        {
+            state = State.Hit;
+            hp -= 10;
+            Debug.Log($"{hp}");
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        state = State.Move;
     }
 
     private void Update()
