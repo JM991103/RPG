@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     PlayerMoter moter;
     Rigidbody rigid;
     Animator anim;
+    CharacterCombat combat;
     public LayerMask movementMask;
     public LayerMask interationMask;
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         moter = GetComponent<PlayerMoter>();
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        combat = GetComponent<CharacterCombat>();
     }
 
     private void Update()
@@ -37,10 +39,10 @@ public class PlayerController : MonoBehaviour
             {
                 DeFocus();
                 moter.MoveToTarget(hit.point);
+                SetFocus(null);
             }
         }
         rigid.velocity = Vector3.zero;
-
 
         if (Input.GetMouseButtonDown(1))
         {
@@ -49,6 +51,7 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(ray, out hit, interationMask))
             {
                 SetFocus(hit.collider.GetComponent<Interactable>());
+                //combat.Attack();
             }
         }
 
@@ -68,6 +71,20 @@ public class PlayerController : MonoBehaviour
             //    onFocusChanged(newFocus);
             //}
             onFocusChanged?.Invoke(newFocus);
+
+            if (focus != newFocus && focus != null)
+            {
+                // 기존에 선택되었던 인터랙터블 객체에도 알려주어야 한다.
+                focus.onDeFocused();
+            }
+
+            focus = newFocus;
+            if (focus != null)
+            {
+                // 새로 선택된 인터랙터블 객체에 알려주자.
+                focus.onFocused(transform);
+            }
+            
         }
 
         void DeFocus()

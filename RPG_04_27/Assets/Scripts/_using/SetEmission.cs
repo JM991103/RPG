@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SetEmission : MonoBehaviour
 {
-    public SkinnedMeshRenderer renderer;
+    public SkinnedMeshRenderer render;
     Material material;
 
     bool isAttack = false;
@@ -13,7 +13,7 @@ public class SetEmission : MonoBehaviour
 
     private void Start()
     {
-        material = renderer.material;
+        material = render.material;
     }
 
     public void FX()

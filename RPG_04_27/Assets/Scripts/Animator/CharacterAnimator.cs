@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,14 +20,20 @@ public class CharacterAnimator : MonoBehaviour
 
     private void OnEnable()
     {
+        combat.OnIdle += OnIdle;
         combat.OnAttack += OnAttack;
         combat.OnHitted += OnHitted;
-        combat.OnDie += OnDie;
+        combat.OnDie += OnDie;                
     }
 
     private void Update()
     {
         animator.SetFloat("Walk", agent.velocity.magnitude);
+    }
+
+    void OnIdle()
+    {
+        animator.SetFloat("Walk", 0f);
     }
 
     void OnAttack()
@@ -46,6 +53,7 @@ public class CharacterAnimator : MonoBehaviour
 
     private void OnDisable()
     {
+        combat.OnIdle -= OnIdle;
         combat.OnAttack -= OnAttack;
         combat.OnHitted -= OnHitted;
         combat.OnDie -= OnDie;

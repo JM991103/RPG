@@ -8,16 +8,47 @@ public class Interactable : MonoBehaviour
     public Transform guideTransform;
     public Transform playerTransform;
 
+    bool isFocus = false;
+    bool isInteracted = false;
+
+
+    public virtual void Interact()
+    {
+
+    }
+
     private void Update()
-    {        
-        float distance = Vector3.Distance(guideTransform.position, playerTransform.position);
+    {
+        if (isFocus)
+        {
 
-        //float magnitude = (transform.position - playerTransform.position).magnitude;
+            float distance = Vector3.Distance(guideTransform.position, playerTransform.position);
 
-        //Debug.LogFormat("{0} / {1} == {2}", (distance == magnitude), distance, magnitude);
+            //float magnitude = (transform.position - playerTransform.position).magnitude;
 
-        //float sqrmagnitude = (transform.position - playerTransform.position).sqrMagnitude;
-                
+            //Debug.LogFormat("{0} / {1} == {2}", (distance == magnitude), distance, magnitude);
+
+            //float sqrmagnitude = (transform.position - playerTransform.position).sqrMagnitude;
+
+            if (distance < size)
+            {
+                isInteracted = true;
+                Interact();
+            }
+        }                
+    }
+
+    public void onFocused(Transform tf)
+    {
+        isFocus = true;
+        playerTransform = tf;
+        isInteracted = false;
+    }
+
+    public void onDeFocused()
+    {
+        isFocus = false;
+        playerTransform = null;        
     }
 
     private void OnDrawGizmos()
