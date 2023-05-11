@@ -27,5 +27,7 @@ public class Enemy : Interactable
     void Die()
     {
         Debug.Log("적 캐릭터가 죽었습니다");
+        PoolingManager.instance.ReturnObject(this.gameObject);
+        //Destroy(this.gameObject, 1f);
     }
 }

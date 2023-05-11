@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class EnemyController : MonoBehaviour
 {
     NavMeshAgent agent;
     CharacterCombat combat;
-    public Transform target;
+    Transform target;
 
     public float detectionSize;
 
     private void Start()
     {
+        target = Player.instance.transform;
         agent = GetComponent<NavMeshAgent>();
         combat = GetComponent<CharacterCombat>();
     }

@@ -26,12 +26,17 @@ public class CharacterCombat : MonoBehaviour
         myStat = GetComponent<CharacterStat>();
     }
 
+    public void Idle()
+    {
+        OnIdle?.Invoke();
+    }
+
     public void Attack(CharacterStat enemyStat)
     {        
         if (attackCooltime <= 0f)
         {
-            enemyStat.Hitted(myStat.power);
             enemyStat.GetComponent<CharacterCombat>().Hitted();
+            StartCoroutine(GetDamage(enemyStat, 0.5f));
 
             if (OnAttack != null)
             {
@@ -40,6 +45,19 @@ public class CharacterCombat : MonoBehaviour
             isInCombat = true;
             attackCooltime = cooltime;
             lastAttackTime = Time.time;
+        }
+    }
+
+    IEnumerator GetDamage(CharacterStat enemyStat , float dalay)
+    {
+        yield return new WaitForSeconds(dalay);
+        if (enemyStat != null)
+        {
+            enemyStat.Hitted(myStat.power);
+        }
+        else
+        {
+            Idle();
         }
     }
 
