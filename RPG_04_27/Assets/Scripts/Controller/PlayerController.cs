@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -30,6 +29,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -82,7 +86,7 @@ public class PlayerController : MonoBehaviour
             if (focus != null)
             {
                 // 새로 선택된 인터랙터블 객체에 알려주자.
-                focus.onFocused(transform);
+                focus.onFocused();
             }
             
         }

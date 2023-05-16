@@ -15,7 +15,7 @@ public class PickupItem : Interactable
     {
         Debug.Log("æ∆¿Ã≈€ »πµÊ");
         bool isSelected = Inventory.instance.Add(item);
-        if(!isSelected)
+        if(isSelected)
         {
             Destroy(this.gameObject);
         }
