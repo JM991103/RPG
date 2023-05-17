@@ -10,7 +10,7 @@ public class InventoryUI : MonoBehaviour
 
     public GameObject inventoryHead;
 
-    private void Awake()
+    private void Start()
     {
         inventory = Inventory.instance;
         inventory.onItemChange += UpdateUI;

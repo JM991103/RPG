@@ -20,10 +20,12 @@ public class CharacterCombat : MonoBehaviour
     #endregion
 
     CharacterStat myStat;
+    public Transform hpBarfill;
 
     private void Awake()
     {
         myStat = GetComponent<CharacterStat>();
+        HPBarManager.instance.Create(hpBarfill, myStat);
     }
 
     public void Idle()
@@ -64,7 +66,7 @@ public class CharacterCombat : MonoBehaviour
     public void Hitted()
     {
         OnHitted?.Invoke();
-    }
+    }    
 
     private void Update()
     {
