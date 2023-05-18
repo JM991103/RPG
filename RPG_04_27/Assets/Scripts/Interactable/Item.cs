@@ -10,6 +10,7 @@ public class Item : ScriptableObject
 {
     public string name = "Item";
     public Sprite icon = null;
+    public AudioSource audioClip;
 
     public virtual void Use()
     {

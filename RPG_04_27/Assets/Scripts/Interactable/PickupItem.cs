@@ -13,10 +13,15 @@ public class PickupItem : Interactable
 
     void SelectItem()
     {
-        Debug.Log("æ∆¿Ã≈€ »πµÊ");
+        //Debug.Log("æ∆¿Ã≈€ »πµÊ");
         bool isSelected = Inventory.instance.Add(item);
         if(isSelected)
         {
+            if(item.audioClip != null)
+            {
+                AudioManager.instance.source.clip = item.audioClip.clip;
+                AudioManager.instance.source.Play();
+            }
             Destroy(this.gameObject);
         }
     }
