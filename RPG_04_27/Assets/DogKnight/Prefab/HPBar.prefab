@@ -51,6 +51,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hpBar: {fileID: 3800217687431034169}
+  target: {fileID: 0}
+  stat: {fileID: 0}
 --- !u!1 &4064704431677006615
 GameObject:
   m_ObjectHideFlags: 0
